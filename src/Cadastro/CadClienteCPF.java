@@ -3,18 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package javatcc;
+package Cadastro;
 
 /**
  *
  * @author Guedes
  */
-import visual.index;
-public class JavaTCC {
-
-    public static void main(String[] args) {
-        visual.index index = new visual.index() {};
-       index.setVisible(true);
-    }
+public class CadClienteCPF {
     
 }
