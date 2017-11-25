@@ -9,7 +9,7 @@ package javatcc;
  *
  * @author Guedes
  */
-import visual.index;
+
 public class JavaTCC {
 
     public static void main(String[] args) {

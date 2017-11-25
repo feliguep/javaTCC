@@ -9,6 +9,6 @@ package Cadastro;
  *
  * @author Guedes
  */
-public class CadNCL {
+public class CadNCL extends CadMarca {
     
 }

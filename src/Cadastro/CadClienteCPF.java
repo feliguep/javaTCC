@@ -9,6 +9,6 @@ package Cadastro;
  *
  * @author Guedes
  */
-public class CadClienteCPF {
+public class CadClienteCPF  {
     
 }
