@@ -1,22 +1,23 @@
 
 package Cadastro;
 
-/**
- *
- * @author Guedes
- */
+
+import java.sql.Connection;
+
+import java.sql.SQLException;
 import java.sql.*;
 public class CadastroBd {
     
-     private static Connection conectarBanco(String banco) throws ClassNotFoundException, SQLException
+     private static Connection conectarBanco(String tcc) throws ClassNotFoundException, SQLException
     {
         try
         {
             Class.forName("org.postgresql.Driver");
             try
             {
-               
-                Connection conexao = DriverManager.getConnection("jdbc:postgresql//localhost:5432", "postgres", "teste");
+                 String bd = "jdbc:postgresql://localhost:5432/" + tcc; 
+                Connection conexao = DriverManager.getConnection( bd, "postgres", "teste");
+   
                 return (conexao);
             }
             catch (SQLException excecao) {

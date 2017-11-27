@@ -34,5 +34,13 @@ public class Admincad extends CadastroBd {
             throw (excecao);
         }
     }
+    public static String pesquisarDados(int cod_admin) throws Exception {
+        try {
+            String cmdsql = "SELECT *FROM cadastro_admin WHERE  cod_admin = " +  cod_admin;
+            return (consultarDados(cmdsql));
+        } catch (Exception excecao) {
+            throw (excecao);
+        }
+    }
     
 }

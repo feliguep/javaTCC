@@ -205,7 +205,11 @@ public class FormAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonExcluirActionPerformed
 
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
-        // TODO add your handling code here:
+ try {
+           jTextFieldEmailAdm.setText(Cadastro.Admincad.pesquisarDados(Integer.parseInt(jTextFieldCodigoAdm.getText())));
+        } catch (Exception excecao) {
+            jLabelMensagem.setText(excecao.getMessage());
+        }        
     }//GEN-LAST:event_jButtonPesquisarActionPerformed
 
     private void jButtonFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFecharActionPerformed
