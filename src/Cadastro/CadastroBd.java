@@ -49,10 +49,11 @@ public class CadastroBd {
             retorno.next();
             try
             {
-                dado = retorno.getString("tcc");
+                dado = retorno.getString("cod_admin");
             }
             catch (SQLException excecao)
             {
+                System.out.println(excecao.getMessage());
                 throw new Exception("Código não cadastrado");
             }
             return (dado);
