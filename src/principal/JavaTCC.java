@@ -23,7 +23,7 @@ import Visual.FormPesquisa;
 
 public class JavaTCC {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ClassNotFoundException {
         Visual.FormMenu formMenu = new Visual.FormMenu();
         formMenu.setVisible(true);
     }

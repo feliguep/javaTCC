@@ -1,21 +1,20 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Visual;
 
-/**
- *
- * @author Guedes
- */
+import java.sql.*;
+import Cadastro.CadastroBd;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class FormMenu extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FormMenu
-     */
-    public FormMenu() {
+    Connection conexao = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
+    
+    public FormMenu() throws ClassNotFoundException {
         initComponents();
+        
     }
 
     /**
@@ -188,7 +187,11 @@ public class FormMenu extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormMenu().setVisible(true);
+                try {
+                    new FormMenu().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(FormMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

@@ -14,6 +14,7 @@ public class FormPesquisa extends javax.swing.JFrame {
      */
     public FormPesquisa() {
         initComponents();
+        
     }
 
     /**
