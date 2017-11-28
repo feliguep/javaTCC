@@ -30,12 +30,12 @@ public class FormMarca extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        jButtonNCL1 = new javax.swing.JButton();
+        jButtonNCL31 = new javax.swing.JButton();
+        jButtonNCL32 = new javax.swing.JButton();
+        jButtonNCL33 = new javax.swing.JButton();
+        jButtonNCL35 = new javax.swing.JButton();
+        jButtonNCL37 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
@@ -51,7 +51,7 @@ public class FormMarca extends javax.swing.JFrame {
         jButton7 = new javax.swing.JButton();
         jButton8 = new javax.swing.JButton();
         jButton9 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
+        jButtonFechar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,25 +61,45 @@ public class FormMarca extends javax.swing.JFrame {
 
         jLabel3.setText("Escolha o(s) segmento(s) de atividade(s) da sua marca:");
 
-        jButton1.setText("1- Substâncias químicas destinadas à indústria, às ciências, à fotografia, assim como à agricultura, à horticultura e à silvicultura; resinas artificiais não processadas, matérias plásticas não processadas; adubo; composições extintoras de fogo; preparações para temperar e soldar; substâncias químicas destinadas a conservar alimentos; substâncias tanantes; substâncias adesivas destinadas à indústria.");
-
-        jButton2.setText("31 - Produtos agrícolas, hortícolas, florestais e grãos não incluídos em outras classes; animais vivos; frutas, legumes e verduras frescos; sementes, plantas e flores naturais; alimentos para animais, malte.");
-
-        jButton3.setText("32- Cervejas; águas minerais e gasosas e outras bebidas não alcoólicas; bebidas de frutas e sucos de fruta; xaropes e outras preparações para fabricar bebidas.");
-
-        jButton4.setText("33- Bebidas alcoólicas (exceto cervejas).");
-
-        jButton5.setText("35 - Propaganda; gestão de negócios; administração de negócios; funções de escritório.");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        jButtonNCL1.setText("1- Substâncias químicas destinadas à indústria, às ciências, à fotografia, assim como à agricultura, à horticultura e à silvicultura; resinas artificiais não processadas, matérias plásticas não processadas; adubo; composições extintoras de fogo; preparações para temperar e soldar; substâncias químicas destinadas a conservar alimentos; substâncias tanantes; substâncias adesivas destinadas à indústria.");
+        jButtonNCL1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                jButtonNCL1ActionPerformed(evt);
             }
         });
 
-        jButton6.setText("37 - Construção civil; reparos; serviços de instalação.");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        jButtonNCL31.setText("31 - Produtos agrícolas, hortícolas, florestais e grãos não incluídos em outras classes; animais vivos; frutas, legumes e verduras frescos; sementes, plantas e flores naturais; alimentos para animais, malte.");
+        jButtonNCL31.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                jButtonNCL31ActionPerformed(evt);
+            }
+        });
+
+        jButtonNCL32.setText("32- Cervejas; águas minerais e gasosas e outras bebidas não alcoólicas; bebidas de frutas e sucos de fruta; xaropes e outras preparações para fabricar bebidas.");
+        jButtonNCL32.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNCL32ActionPerformed(evt);
+            }
+        });
+
+        jButtonNCL33.setText("33- Bebidas alcoólicas (exceto cervejas).");
+        jButtonNCL33.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNCL33ActionPerformed(evt);
+            }
+        });
+
+        jButtonNCL35.setText("35 - Propaganda; gestão de negócios; administração de negócios; funções de escritório.");
+        jButtonNCL35.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNCL35ActionPerformed(evt);
+            }
+        });
+
+        jButtonNCL37.setText("37 - Construção civil; reparos; serviços de instalação.");
+        jButtonNCL37.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonNCL37ActionPerformed(evt);
             }
         });
 
@@ -99,7 +119,7 @@ public class FormMarca extends javax.swing.JFrame {
 
         jLabel5.setText("Status do processo:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "---------", "Arquivada", "Registrada", "Registro em andamento", "Exame de mérito" }));
 
         jLabel6.setText("Num do Processo:");
 
@@ -142,7 +162,12 @@ public class FormMarca extends javax.swing.JFrame {
             }
         });
 
-        jButton10.setText("Fechar");
+        jButtonFechar.setText("Fechar");
+        jButtonFechar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonFecharActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -154,13 +179,13 @@ public class FormMarca extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addComponent(jButton1)
-                            .addComponent(jButton2)
-                            .addComponent(jButton3)
-                            .addComponent(jButton4)
-                            .addComponent(jButton5)
+                            .addComponent(jButtonNCL1)
+                            .addComponent(jButtonNCL31)
+                            .addComponent(jButtonNCL32)
+                            .addComponent(jButtonNCL33)
+                            .addComponent(jButtonNCL35)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton6)
+                                .addComponent(jButtonNCL37)
                                 .addGap(237, 237, 237)
                                 .addComponent(jButton7)
                                 .addGap(18, 18, 18)
@@ -200,7 +225,7 @@ public class FormMarca extends javax.swing.JFrame {
                         .addGap(549, 549, 549)
                         .addComponent(jButton9)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton10)))
+                        .addComponent(jButtonFechar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -216,19 +241,19 @@ public class FormMarca extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(jButtonNCL1)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(jButtonNCL31)
                 .addGap(18, 18, 18)
-                .addComponent(jButton3)
+                .addComponent(jButtonNCL32)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
+                .addComponent(jButtonNCL33)
                 .addGap(18, 18, 18)
-                .addComponent(jButton5)
+                .addComponent(jButtonNCL35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addComponent(jButton6))
+                        .addComponent(jButtonNCL37))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(9, 9, 9)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -237,7 +262,7 @@ public class FormMarca extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton9)
-                    .addComponent(jButton10))
+                    .addComponent(jButtonFechar))
                 .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -258,13 +283,15 @@ public class FormMarca extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    private void jButtonNCL35ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNCL35ActionPerformed
+         Visual.FormNCLsub35 formNCLsub35 = new Visual.FormNCLsub35();
+        formNCLsub35.setVisible(true); 
+    }//GEN-LAST:event_jButtonNCL35ActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    private void jButtonNCL37ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNCL37ActionPerformed
+        Visual.FormNCLsub37 formNCLsub37 = new Visual.FormNCLsub37();
+        formNCLsub37.setVisible(true);
+    }//GEN-LAST:event_jButtonNCL37ActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
@@ -293,6 +320,30 @@ public class FormMarca extends javax.swing.JFrame {
     private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton9ActionPerformed
+
+    private void jButtonNCL1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNCL1ActionPerformed
+        Visual.FormNCLsub1 formNCLsub1 = new Visual.FormNCLsub1();
+        formNCLsub1.setVisible(true);
+    }//GEN-LAST:event_jButtonNCL1ActionPerformed
+
+    private void jButtonNCL31ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNCL31ActionPerformed
+        Visual.FormNCLsub31 formNCLsub31 = new Visual.FormNCLsub31();
+        formNCLsub31.setVisible(true);
+    }//GEN-LAST:event_jButtonNCL31ActionPerformed
+
+    private void jButtonNCL32ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNCL32ActionPerformed
+        Visual.FormNCLsub32 formNCLsub32 = new Visual.FormNCLsub32();
+        formNCLsub32.setVisible(true);
+    }//GEN-LAST:event_jButtonNCL32ActionPerformed
+
+    private void jButtonNCL33ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNCL33ActionPerformed
+        Visual.FormNCLsub33 formNCLsub33 = new Visual.FormNCLsub33();
+        formNCLsub33.setVisible(true);
+    }//GEN-LAST:event_jButtonNCL33ActionPerformed
+
+    private void jButtonFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFecharActionPerformed
+        this.setVisible(false);
+    }//GEN-LAST:event_jButtonFecharActionPerformed
 
     /**
      * @param args the command line arguments
@@ -330,16 +381,16 @@ public class FormMarca extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
+    private javax.swing.JButton jButtonFechar;
+    private javax.swing.JButton jButtonNCL1;
+    private javax.swing.JButton jButtonNCL31;
+    private javax.swing.JButton jButtonNCL32;
+    private javax.swing.JButton jButtonNCL33;
+    private javax.swing.JButton jButtonNCL35;
+    private javax.swing.JButton jButtonNCL37;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -29,13 +29,13 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton1" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton2" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton3" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton4" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton5" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButtonNCL1" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButtonNCL31" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButtonNCL32" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButtonNCL33" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButtonNCL35" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="jButton6" min="-2" max="-2" attributes="0"/>
+                              <Component id="jButtonNCL37" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="237" max="-2" attributes="0"/>
                               <Component id="jButton7" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -85,7 +85,7 @@
                       <EmptySpace min="-2" pref="549" max="-2" attributes="0"/>
                       <Component id="jButton9" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jButton10" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButtonFechar" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
               <EmptySpace max="32767" attributes="0"/>
@@ -106,19 +106,19 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+              <Component id="jButtonNCL1" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+              <Component id="jButtonNCL31" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+              <Component id="jButtonNCL32" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jButton4" min="-2" max="-2" attributes="0"/>
+              <Component id="jButtonNCL33" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jButton5" min="-2" max="-2" attributes="0"/>
+              <Component id="jButtonNCL35" min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jButton6" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButtonNCL37" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
@@ -131,7 +131,7 @@
               <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jButton9" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jButton10" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonFechar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -170,40 +170,52 @@
         <Property name="text" type="java.lang.String" value="Escolha o(s) segmento(s) de atividade(s) da sua marca:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton1">
+    <Component class="javax.swing.JButton" name="jButtonNCL1">
       <Properties>
         <Property name="text" type="java.lang.String" value="1- Subst&#xe2;ncias qu&#xed;micas destinadas &#xe0; ind&#xfa;stria, &#xe0;s ci&#xea;ncias, &#xe0; fotografia, assim como &#xe0; agricultura, &#xe0; horticultura e &#xe0; silvicultura; resinas artificiais n&#xe3;o processadas, mat&#xe9;rias pl&#xe1;sticas n&#xe3;o processadas; adubo; composi&#xe7;&#xf5;es extintoras de fogo; prepara&#xe7;&#xf5;es para temperar e soldar; subst&#xe2;ncias qu&#xed;micas destinadas a conservar alimentos; subst&#xe2;ncias tanantes; subst&#xe2;ncias adesivas destinadas &#xe0; ind&#xfa;stria."/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonNCL1ActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="jButtonNCL31">
       <Properties>
         <Property name="text" type="java.lang.String" value="31 - Produtos agr&#xed;colas, hort&#xed;colas, florestais e gr&#xe3;os n&#xe3;o inclu&#xed;dos em outras classes; animais vivos; frutas, legumes e verduras frescos; sementes, plantas e flores naturais; alimentos para animais, malte."/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonNCL31ActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton3">
+    <Component class="javax.swing.JButton" name="jButtonNCL32">
       <Properties>
         <Property name="text" type="java.lang.String" value="32- Cervejas; &#xe1;guas minerais e gasosas e outras bebidas n&#xe3;o alco&#xf3;licas; bebidas de frutas e sucos de fruta; xaropes e outras prepara&#xe7;&#xf5;es para fabricar bebidas."/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonNCL32ActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton4">
+    <Component class="javax.swing.JButton" name="jButtonNCL33">
       <Properties>
         <Property name="text" type="java.lang.String" value="33- Bebidas alco&#xf3;licas (exceto cervejas)."/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonNCL33ActionPerformed"/>
+      </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton5">
+    <Component class="javax.swing.JButton" name="jButtonNCL35">
       <Properties>
         <Property name="text" type="java.lang.String" value="35 - Propaganda; gest&#xe3;o de neg&#xf3;cios; administra&#xe7;&#xe3;o de neg&#xf3;cios; fun&#xe7;&#xf5;es de escrit&#xf3;rio."/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton5ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonNCL35ActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton6">
+    <Component class="javax.swing.JButton" name="jButtonNCL37">
       <Properties>
         <Property name="text" type="java.lang.String" value="37 - Constru&#xe7;&#xe3;o civil; reparos; servi&#xe7;os de instala&#xe7;&#xe3;o."/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton6ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonNCL37ActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="jTextField1">
@@ -229,11 +241,12 @@
     <Component class="javax.swing.JComboBox" name="jComboBox1">
       <Properties>
         <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-          <StringArray count="4">
-            <StringItem index="0" value="Item 1"/>
-            <StringItem index="1" value="Item 2"/>
-            <StringItem index="2" value="Item 3"/>
-            <StringItem index="3" value="Item 4"/>
+          <StringArray count="5">
+            <StringItem index="0" value="---------"/>
+            <StringItem index="1" value="Arquivada"/>
+            <StringItem index="2" value="Registrada"/>
+            <StringItem index="3" value="Registro em andamento"/>
+            <StringItem index="4" value="Exame de m&#xe9;rito"/>
           </StringArray>
         </Property>
       </Properties>
@@ -297,10 +310,13 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton9ActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="jButton10">
+    <Component class="javax.swing.JButton" name="jButtonFechar">
       <Properties>
         <Property name="text" type="java.lang.String" value="Fechar"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonFecharActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
