@@ -1,21 +1,47 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package Visual;
 
+package Visual;
+import model.PesquisaMod;
 import java.sql.*;
 import Cadastro.CadastroBd;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 public class FormPesquisa extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FormPesquisa
-     */
-    public FormPesquisa() {
-        initComponents();
-        
-    }
+    Connection conexao;
+    PreparedStatement pst;
+    ResultSet rs;
+    
+    public FormPesquisa() throws ClassNotFoundException, SQLException{
+
+    initComponents();
+    conexao = CadastroBd.cadastrobd();
+   }
+    
+     public void cadastrarPesquisa  ()
+    {
+        model.PesquisaMod pesquisa_viabilidade = new model.PesquisaMod();
+ String sql = "INSERT INTO pesquisa_viabilidade (cpf_cnpj_pesquisa,telefone_pesquisa,nome_pesquisa,marca_pesquisa,atividade_pesquisa,email_pesquisa,viabilty,data_pesquisa,obs_pesquisa) VALUES (?,?,?,?,?,?,?,?,?)";
+try
+{
+    pst = conexao.prepareStatement(sql);
+    pst.setInt(1,pesquisa_viabilidade.getCpf_cnpj_pesquisa());
+    pst.setString(2, pesquisa_viabilidade.getTelefone_pesquisa());
+    pst.setString(3, pesquisa_viabilidade.getNome_pesquisa());
+    pst.setString(4, pesquisa_viabilidade.getMarca_pesquisa());
+    pst.setString(5, pesquisa_viabilidade.getAtividade_pesquisa());
+    pst.setString(6, pesquisa_viabilidade.getEmail_pesquisa());
+    pst.setString(7, pesquisa_viabilidade.getViabilty());
+    pst.setDate(8, pesquisa_viabilidade.getData_pesquisa());
+    pst.setString(9, pesquisa_viabilidade.getObs_pesquisa());
+            pst.execute();
+              JOptionPane.showMessageDialog (null, "Cadastro Realizado");
+}catch(SQLException error)
+{
+JOptionPane.showMessageDialog (null, error);
+}
+  
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -265,7 +291,7 @@ public class FormPesquisa extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonFecharActionPerformed
 
     private void jButtonIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIncluirActionPerformed
-              
+              cadastrarPesquisa ();
     }//GEN-LAST:event_jButtonIncluirActionPerformed
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -302,7 +328,13 @@ public class FormPesquisa extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormPesquisa().setVisible(true);
+                try {
+                    new FormPesquisa().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(FormPesquisa.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(FormPesquisa.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

@@ -5,10 +5,7 @@
  */
 package model;
 
-/**
- *
- * @author Guedes
- */
+
 public class Parceiromod {
      private int codigo_indica; 
    private String nome_parceiro;

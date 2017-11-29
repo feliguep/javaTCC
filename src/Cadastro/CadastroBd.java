@@ -8,11 +8,10 @@ import java.sql.SQLException;
 import java.sql.*;
 import javax.swing.JOptionPane;
 public class CadastroBd {
-    
-     private static Connection conectarBanco(String tcc) throws ClassNotFoundException, SQLException
+
+    public static Connection cadastrobd()throws ClassNotFoundException, SQLException
     {
-        
-            try
+         try
             {
                 Class.forName("org.postgresql.Driver"); 
                 String bd = "jdbc:postgresql://localhost:5432/tcc"; 
@@ -23,17 +22,7 @@ public class CadastroBd {
             catch (SQLException error) {
                 JOptionPane.showMessageDialog (null, error);
                 return (null);
-            }            
-        }
-
-    
-        
+            }
     }
-     
-     
-     
+}            
     
-
-    
-    
-

@@ -10,10 +10,23 @@ import Visual.FormCNPJ;
 import Visual.FormCPF;
 import Visual.FormMarca;
 import Visual.FormCliente;
-import Visual.FormNCLsub1;
 import Visual.FormPagamento;
 import Visual.FormParceiro;
 import Visual.FormPesquisa;
+import Visual.FormListCNPJ;
+import Visual.FormListCPF;
+import Visual.FormListMarca;
+import Visual.FormListPagamento;
+import Visual.FormListParceiro;
+import Visual.FormListPesquisa;
+import Visual.FormNCLsub1;
+import Visual.FormNCLsub31;
+import Visual.FormNCLsub32;
+import Visual.FormNCLsub35;
+import Visual.FormNCLsub33;
+import Visual.FormNCLsub37;
+import Visual.FormMenu;
+import java.sql.SQLException;
 
 
 /**
@@ -23,7 +36,7 @@ import Visual.FormPesquisa;
 
 public class JavaTCC {
 
-    public static void main(String[] args) throws ClassNotFoundException {
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
         Visual.FormMenu formMenu = new Visual.FormMenu();
         formMenu.setVisible(true);
     }

@@ -5,10 +5,7 @@
  */
 package model;
 
-/**
- *
- * @author Guedes
- */
+import Visual.FormAdmin;
 public class Adminmod {
      private int cod_admin;
     private String email_login_adm;
