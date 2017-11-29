@@ -2,10 +2,13 @@
 package Visual;
 import model.PesquisaMod;
 import java.sql.*;
+import java.sql.PreparedStatement;
 import Cadastro.CadastroBd;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
+
 public class FormPesquisa extends javax.swing.JFrame {
 
     Connection conexao;
@@ -16,26 +19,42 @@ public class FormPesquisa extends javax.swing.JFrame {
 
     initComponents();
     conexao = CadastroBd.cadastrobd();
+    listarPesquisa();
    }
+    
+    public void listarPesquisa(){
+    String sql = "SELECT *from pesquisa_viabilidade";
+    try
+    {
+    pst = conexao.prepareStatement(sql);
+    rs = pst.executeQuery();
+    jTablePesquisa.setModel(DbUtils.resultSetToTableModel(rs));
+    }catch(SQLException error)
+    {
+    JOptionPane.showMessageDialog (null, error);
+    }
+    }
+    
     
      public void cadastrarPesquisa  ()
     {
-        model.PesquisaMod pesquisa_viabilidade = new model.PesquisaMod();
- String sql = "INSERT INTO pesquisa_viabilidade (cpf_cnpj_pesquisa,telefone_pesquisa,nome_pesquisa,marca_pesquisa,atividade_pesquisa,email_pesquisa,viabilty,data_pesquisa,obs_pesquisa) VALUES (?,?,?,?,?,?,?,?,?)";
+       
+ String sql = "INSERT INTO pesquisa_viabilidade (cpf_cnpj_pesquisa,telefone_pesquisa,nome_pesquisa,marca_pesquisa,atividade_pesquisa,email_pesquisa,viabilty,obs_pesquisa) VALUES (?,?,?,?,?,?,?,?)";
 try
 {
     pst = conexao.prepareStatement(sql);
-    pst.setInt(1,pesquisa_viabilidade.getCpf_cnpj_pesquisa());
-    pst.setString(2, pesquisa_viabilidade.getTelefone_pesquisa());
-    pst.setString(3, pesquisa_viabilidade.getNome_pesquisa());
-    pst.setString(4, pesquisa_viabilidade.getMarca_pesquisa());
-    pst.setString(5, pesquisa_viabilidade.getAtividade_pesquisa());
-    pst.setString(6, pesquisa_viabilidade.getEmail_pesquisa());
-    pst.setString(7, pesquisa_viabilidade.getViabilty());
-    pst.setDate(8, pesquisa_viabilidade.getData_pesquisa());
-    pst.setString(9, pesquisa_viabilidade.getObs_pesquisa());
-            pst.execute();
+     pst = conexao.prepareStatement(sql);
+    pst.setInt(1,Integer.parseInt(jTextFieldCPFCNPJ.getText())); 
+    pst.setString(2, jTextFieldTelMarca.getText());
+    pst.setString(3, jTextFieldNome.getText());
+    pst.setString(4, jTextFieldMarca.getText());
+    pst.setString(5, jTextFieldSegAtiv.getText());
+    pst.setString(6, jTextFieldEmail.getText());
+    pst.setString(7, (String) jComboBoxViabi.getSelectedItem());
+    pst.setString(8, jTextAreaObs.getText());
+     pst.execute();
               JOptionPane.showMessageDialog (null, "Cadastro Realizado");
+              listarPesquisa();
 }catch(SQLException error)
 {
 JOptionPane.showMessageDialog (null, error);
@@ -43,6 +62,70 @@ JOptionPane.showMessageDialog (null, error);
   
 }
 
+       public void mostarItens(){
+     int seleciona = jTablePesquisa.getSelectedRow();
+     jTextFieldCPFCNPJ.setText(jTablePesquisa.getModel().getValueAt(seleciona,0).toString());
+     jTextFieldTelMarca.setText(jTablePesquisa.getModel().getValueAt(seleciona,1).toString());
+     jTextFieldNome.setText(jTablePesquisa.getModel().getValueAt(seleciona,2).toString());
+     jTextFieldMarca.setText(jTablePesquisa.getModel().getValueAt(seleciona,3).toString());
+     jTextFieldSegAtiv.setText(jTablePesquisa.getModel().getValueAt(seleciona,4).toString());
+     jTextFieldEmail.setText(jTablePesquisa.getModel().getValueAt(seleciona,5).toString());
+     jComboBoxViabi.setSelectedItem(jTablePesquisa.getModel().getValueAt(seleciona,6).toString());
+     jTextAreaObs.setText(jTablePesquisa.getModel().getValueAt(seleciona,7).toString());
+    
+    }
+       
+       public void editarPesquisa(){
+    String sql = "UPDATE pesquisa_viabilidade set telefone_pesquisa = ?,nome_pesquisa = ?,marca_pesquisa = ?,atividade_pesquisa = ?,email_pesquisa = ?,viabilty = ?,obs_pesquisa = ? WHERE cpf_cnpj_pesquisa =?";
+    try
+{
+    pst = conexao.prepareStatement(sql);  
+    pst.setString(1, jTextFieldTelMarca.getText());
+    pst.setString(2, jTextFieldNome.getText());
+    pst.setString(3, jTextFieldMarca.getText());
+    pst.setString(4, jTextFieldSegAtiv.getText());
+    pst.setString(5, jTextFieldEmail.getText());
+    pst.setString(6, (String) jComboBoxViabi.getSelectedItem());
+    pst.setString(7, jTextAreaObs.getText());
+     pst.setInt(8,Integer.parseInt(jTextFieldCPFCNPJ.getText()));
+            pst.executeUpdate();
+              JOptionPane.showMessageDialog (null, "Cadastro Atualizado com sucesso");
+              listarPesquisa();
+}catch(SQLException error)
+{
+JOptionPane.showMessageDialog (null, error);
+}
+    }
+
+     public void deletarPesquisa(){
+         String sql = "DELETE FROM pesquisa_viabilidade WHERE cpf_cnpj_pesquisa =?";
+           try
+{
+    pst = conexao.prepareStatement(sql); 
+    pst.setInt(1,Integer.parseInt(jTextFieldCPFCNPJ.getText()));
+            pst.executeUpdate();
+              JOptionPane.showMessageDialog (null, "Pesquisa apagada com sucesso");
+              listarPesquisa();
+}catch(SQLException error)
+{
+JOptionPane.showMessageDialog (null, error);
+}
+     }
+    
+    
+    public void limparCampos(){
+      
+      jTextFieldCPFCNPJ.setText("");
+     jTextFieldTelMarca.setText("");
+     jTextFieldNome.setText("");
+     jTextFieldMarca.setText("");
+     jTextFieldSegAtiv.setText("");
+     jTextFieldEmail.setText("");
+     jComboBoxViabi.setSelectedItem("");
+     jTextAreaObs.setText("");      
+        
+        }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,25 +142,24 @@ JOptionPane.showMessageDialog (null, error);
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextAreaObs = new javax.swing.JTextArea();
-        jFormattedTextFieldData = new javax.swing.JFormattedTextField();
         jTextFieldCPFCNPJ = new javax.swing.JTextField();
         jTextFieldTelMarca = new javax.swing.JTextField();
         jTextFieldNome = new javax.swing.JTextField();
         jTextFieldMarca = new javax.swing.JTextField();
         jTextFieldSegAtiv = new javax.swing.JTextField();
         jTextFieldEmail = new javax.swing.JTextField();
-        jButtonPesquisar = new javax.swing.JButton();
         jButtonIncluir = new javax.swing.JButton();
         jButtonAlterar = new javax.swing.JButton();
         jButtonExcluir = new javax.swing.JButton();
         jButtonFechar = new javax.swing.JButton();
-        jLabelMensagem = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBoxViabi = new javax.swing.JComboBox<>();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTablePesquisa = new javax.swing.JTable();
+        jButtonLimpar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -95,8 +177,6 @@ JOptionPane.showMessageDialog (null, error);
 
         jLabel7.setText("Viabilidade:");
 
-        jLabel8.setText("Data:");
-
         jLabel9.setText("Observações:");
 
         jLabel10.setText("Pesquisa de viabilidade");
@@ -105,13 +185,6 @@ JOptionPane.showMessageDialog (null, error);
         jTextAreaObs.setRows(5);
         jScrollPane1.setViewportView(jTextAreaObs);
 
-        jButtonPesquisar.setText("Pesquisar");
-        jButtonPesquisar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonPesquisarActionPerformed(evt);
-            }
-        });
-
         jButtonIncluir.setText("Incluir");
         jButtonIncluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -119,7 +192,7 @@ JOptionPane.showMessageDialog (null, error);
             }
         });
 
-        jButtonAlterar.setText("Alterar");
+        jButtonAlterar.setText("Editar");
         jButtonAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonAlterarActionPerformed(evt);
@@ -127,6 +200,11 @@ JOptionPane.showMessageDialog (null, error);
         });
 
         jButtonExcluir.setText("Excluir");
+        jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExcluirActionPerformed(evt);
+            }
+        });
 
         jButtonFechar.setText("Fechar");
         jButtonFechar.addActionListener(new java.awt.event.ActionListener() {
@@ -135,12 +213,35 @@ JOptionPane.showMessageDialog (null, error);
             }
         });
 
-        jLabelMensagem.setText("Mensagem");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--------", "viável", "inviável" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        jComboBoxViabi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--------", "viável", "inviável" }));
+        jComboBoxViabi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                jComboBoxViabiActionPerformed(evt);
+            }
+        });
+
+        jTablePesquisa.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTablePesquisa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTablePesquisaMouseClicked(evt);
+            }
+        });
+        jScrollPane2.setViewportView(jTablePesquisa);
+
+        jButtonLimpar.setText("Limpar");
+        jButtonLimpar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonLimparActionPerformed(evt);
             }
         });
 
@@ -152,138 +253,126 @@ JOptionPane.showMessageDialog (null, error);
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel6)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addGap(56, 56, 56)
+                                                .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGap(73, 73, 73)
+                                        .addComponent(jLabel7))
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addGap(71, 71, 71)
+                                            .addComponent(jTextFieldTelMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGroup(layout.createSequentialGroup()
+                                            .addComponent(jLabel2)
+                                            .addGap(286, 286, 286)
+                                            .addComponent(jLabel5))))
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldSegAtiv, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboBoxViabi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(76, 76, 76)
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jFormattedTextFieldData, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextFieldCPFCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(48, 48, 48)
-                                .addComponent(jButtonPesquisar))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addComponent(jLabel5)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(8, 8, 8)
+                                        .addComponent(jLabel9)
+                                        .addGap(35, 35, 35)
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(56, 56, 56)
+                                        .addComponent(jButtonIncluir)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jButtonExcluir)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jButtonAlterar)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jButtonFechar)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jButtonLimpar))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel1)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jTextFieldSegAtiv))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addGap(262, 262, 262)
-                                        .addComponent(jLabel10)))
-                                .addGap(102, 102, 102)
-                                .addComponent(jButtonExcluir)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonFechar))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(66, Short.MAX_VALUE))
+                                        .addComponent(jTextFieldCPFCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(91, 91, 91)
+                                        .addComponent(jLabel4)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jTextFieldMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 0, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jTextFieldMarca))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextFieldTelMarca, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(jButtonIncluir)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButtonAlterar)
-                                .addGap(65, 65, 65))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(140, 140, 140)
-                                .addComponent(jLabelMensagem)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
+                                .addGap(262, 262, 262)
+                                .addComponent(jLabel10))
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 810, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(144, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel10)
-                .addGap(10, 10, 10)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jTextFieldCPFCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButtonPesquisar))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabelMensagem)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jLabel2)
-                                .addComponent(jTextFieldTelMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jTextFieldMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jTextFieldSegAtiv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel6))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButtonIncluir)
-                                    .addComponent(jButtonAlterar))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButtonExcluir)
-                                    .addComponent(jButtonFechar))
-                                .addGap(38, 38, 38))))
-                    .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8)
-                    .addComponent(jFormattedTextFieldData, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(jLabel9)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldCPFCNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel4)
+                            .addComponent(jTextFieldMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jTextFieldTelMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel5)
+                            .addComponent(jTextFieldSegAtiv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(21, 21, 21)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jComboBoxViabi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7))))
+                        .addGap(32, 32, 32)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(28, 28, 28))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonIncluir)
+                            .addComponent(jButtonExcluir)
+                            .addComponent(jButtonAlterar)
+                            .addComponent(jButtonFechar)
+                            .addComponent(jButtonLimpar))
+                        .addGap(38, 38, 38))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel9)
+                        .addGap(227, 227, 227))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonPesquisarActionPerformed
-
     private void jButtonAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarActionPerformed
-        // TODO add your handling code here:
+        editarPesquisa();       
     }//GEN-LAST:event_jButtonAlterarActionPerformed
 
     private void jButtonFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFecharActionPerformed
@@ -294,9 +383,21 @@ JOptionPane.showMessageDialog (null, error);
               cadastrarPesquisa ();
     }//GEN-LAST:event_jButtonIncluirActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void jComboBoxViabiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxViabiActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_jComboBoxViabiActionPerformed
+
+    private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
+        deletarPesquisa();
+    }//GEN-LAST:event_jButtonExcluirActionPerformed
+
+    private void jTablePesquisaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTablePesquisaMouseClicked
+         mostarItens();
+    }//GEN-LAST:event_jTablePesquisaMouseClicked
+
+    private void jButtonLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonLimparActionPerformed
+       limparCampos();
+    }//GEN-LAST:event_jButtonLimparActionPerformed
 
     /**
      * @param args the command line arguments
@@ -344,9 +445,8 @@ JOptionPane.showMessageDialog (null, error);
     private javax.swing.JButton jButtonExcluir;
     private javax.swing.JButton jButtonFechar;
     private javax.swing.JButton jButtonIncluir;
-    private javax.swing.JButton jButtonPesquisar;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JFormattedTextField jFormattedTextFieldData;
+    private javax.swing.JButton jButtonLimpar;
+    private javax.swing.JComboBox<String> jComboBoxViabi;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -355,10 +455,10 @@ JOptionPane.showMessageDialog (null, error);
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JLabel jLabelMensagem;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTablePesquisa;
     private javax.swing.JTextArea jTextAreaObs;
     private javax.swing.JTextField jTextFieldCPFCNPJ;
     private javax.swing.JTextField jTextFieldEmail;

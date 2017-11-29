@@ -5,7 +5,7 @@
  */
 package model;
 
-import java.sql.Date;
+
 
 /**
  *
@@ -19,7 +19,6 @@ public class PesquisaMod {
     private String atividade_pesquisa; 
     private String email_pesquisa; 
     private String viabilty;
-    private Date data_pesquisa;
     private String obs_pesquisa;
     
     
@@ -89,16 +88,6 @@ public class PesquisaMod {
     
     public void setViabilty(String viabilty) {
         this.viabilty = viabilty;
-    }
-
-    
-    public Date getData_pesquisa() {
-        return data_pesquisa;
-    }
-
-    
-    public void setData_pesquisa(Date data_pesquisa) {
-        this.data_pesquisa = data_pesquisa;
     }
 
     

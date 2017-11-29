@@ -198,7 +198,14 @@ public class FormMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemPesquisaActionPerformed
 
     private void jMenuItemPagementoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemPagementoActionPerformed
-        Visual.FormPagamento formPagamento = new Visual.FormPagamento();
+        Visual.FormPagamento formPagamento = null;
+        try {
+            formPagamento = new Visual.FormPagamento();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(FormMenu.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FormMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
         formPagamento.setVisible(true);
     }//GEN-LAST:event_jMenuItemPagementoActionPerformed
 
