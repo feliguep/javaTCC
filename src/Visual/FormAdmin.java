@@ -76,10 +76,25 @@ JOptionPane.showMessageDialog (null, error);
 {
 JOptionPane.showMessageDialog (null, error);
 }
-    
-    
     }
-        public void limparCampos(){
+
+     public void deletarAdmin(){
+         String sql = "DELETE FROM cadastro_admin WHERE cod_admin =?";
+           try
+{
+    pst = conexao.prepareStatement(sql); 
+    pst.setInt(1,Integer.parseInt(jTextFieldCodigoAdm.getText()));
+            pst.executeUpdate();
+              JOptionPane.showMessageDialog (null, "Administrador apagado com sucesso");
+              listarAdmin();
+}catch(SQLException error)
+{
+JOptionPane.showMessageDialog (null, error);
+}
+     }
+    
+    
+    public void limparCampos(){
         jTextFieldCodigoAdm.setText("");
         jTextFieldEmailAdm.setText("");
         jTextFieldSenhaAdm.setText("");
@@ -265,7 +280,7 @@ JOptionPane.showMessageDialog (null, error);
     }//GEN-LAST:event_jButtonEditarActionPerformed
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
-    
+    deletarAdmin();    
     }//GEN-LAST:event_jButtonExcluirActionPerformed
 
     private void jButtonFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFecharActionPerformed

@@ -39,10 +39,7 @@ public class FormMenu extends javax.swing.JFrame {
         jMenu1 = new javax.swing.JMenu();
         jMenuItemListCPF = new javax.swing.JMenuItem();
         jMenuItemListCNPJ = new javax.swing.JMenuItem();
-        jMenuItemListPar = new javax.swing.JMenuItem();
         jMenuItemListMarc = new javax.swing.JMenuItem();
-        jMenuItemListPes = new javax.swing.JMenuItem();
-        jMenuItemListPag = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -128,14 +125,6 @@ public class FormMenu extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItemListCNPJ);
 
-        jMenuItemListPar.setText("Parceiro");
-        jMenuItemListPar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemListParActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItemListPar);
-
         jMenuItemListMarc.setText("Marca");
         jMenuItemListMarc.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -143,22 +132,6 @@ public class FormMenu extends javax.swing.JFrame {
             }
         });
         jMenu1.add(jMenuItemListMarc);
-
-        jMenuItemListPes.setText("Pesquisa");
-        jMenuItemListPes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemListPesActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItemListPes);
-
-        jMenuItemListPag.setText("Pagamento");
-        jMenuItemListPag.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemListPagActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItemListPag);
 
         jMenuBar2.add(jMenu1);
 
@@ -234,22 +207,6 @@ public class FormMenu extends javax.swing.JFrame {
         formMarca.setVisible(true); 
     }//GEN-LAST:event_jMenuItemMarcaActionPerformed
 
-    private void jMenuItemListPagActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemListPagActionPerformed
-         Visual.FormListPagamento formListPagamento = new Visual.FormListPagamento();
-        formListPagamento.setVisible(true); 
-    }//GEN-LAST:event_jMenuItemListPagActionPerformed
-
-    private void jMenuItemListPesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemListPesActionPerformed
-         Visual.FormListPesquisa formListPesquisa = new Visual.FormListPesquisa();
-        formListPesquisa.setVisible(true);
-    }//GEN-LAST:event_jMenuItemListPesActionPerformed
-
-    private void jMenuItemListParActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemListParActionPerformed
-
-         Visual.FormListParceiro formListParceiro = new Visual.FormListParceiro();
-        formListParceiro.setVisible(true);
-    }//GEN-LAST:event_jMenuItemListParActionPerformed
-
     private void jMenuItemListMarcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemListMarcActionPerformed
          Visual.FormListMarca formListMarca = new Visual.FormListMarca();
        formListMarca.setVisible(true);
@@ -322,9 +279,6 @@ public class FormMenu extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItemListCNPJ;
     private javax.swing.JMenuItem jMenuItemListCPF;
     private javax.swing.JMenuItem jMenuItemListMarc;
-    private javax.swing.JMenuItem jMenuItemListPag;
-    private javax.swing.JMenuItem jMenuItemListPar;
-    private javax.swing.JMenuItem jMenuItemListPes;
     private javax.swing.JMenuItem jMenuItemMarca;
     private javax.swing.JMenuItem jMenuItemPagemento;
     private javax.swing.JMenuItem jMenuItemParceiro;
