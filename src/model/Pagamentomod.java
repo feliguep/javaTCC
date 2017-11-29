@@ -9,7 +9,7 @@ package model;
  *
  * @author Guedes
  */
-public class Pagamentomod {
+public class Pagamentomod  extends model.ClienteMod {
      private int id_pagamento;
    private String num_cartao;
    private String nome_cartao;

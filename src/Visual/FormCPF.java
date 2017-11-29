@@ -1,22 +1,126 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Visual;
+import model.Pagamentomod;
+import model.CPFmod;
+import model.CNPJmod;
+import model.MarcaMod;
+import model.ModParceiro;
+import java.sql.*;
+import java.sql.PreparedStatement;
+import Cadastro.CadastroBd;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import net.proteanit.sql.DbUtils;
 
-/**
- *
- * @author Guedes
- */
-public class FormCPF extends javax.swing.JFrame {
 
+public class FormCPF extends javax.swing.JFrame{
+Connection conexao;
+    PreparedStatement pst;
+    ResultSet rs;
     /**
      * Creates new form FormCPF
+     * @throws java.lang.ClassNotFoundException
+     * @throws java.sql.SQLException
      */
-    public FormCPF() {
+    public FormCPF() throws ClassNotFoundException, SQLException {
         initComponents();
+        conexao = CadastroBd.cadastrobd();
+    listarCPF();
     }
+    
+    public void listarCPF(){
+    String sql = "select  *from cliente_cpf\n" +
+"inner join cadastro_cliente \n" +
+"on cliente_cpf.id_cliente =  cadastro_cliente.id_cliente";
+    try
+    {
+    pst = conexao.prepareStatement(sql);
+    rs = pst.executeQuery();
+   jTableCPF.setModel(DbUtils.resultSetToTableModel(rs));
+    }catch(SQLException error)
+    {
+    JOptionPane.showMessageDialog (null, error);
+    }
+    }
+    
+    
+     public void cadastrarCPF ()
+    {
+       
+ String sql = "INSERT INTO cliente_cpf (cpf_cliente,nome_cliente,legal_nature) VALUES (?,?,?)";
+try
+{
+    pst = conexao.prepareStatement(sql);
+     pst = conexao.prepareStatement(sql);
+    pst.setInt(1,Integer.parseInt(jTextFieldCPF.getText())); 
+    pst.setString(2, jTextFieldNome.getText());
+    pst.setString(3, (String) jComboBoxNatureza.getSelectedItem());
+    pst.execute();
+              JOptionPane.showMessageDialog (null, "Cadastro Realizado");
+              listarCPF();
+}catch(SQLException error)
+{
+JOptionPane.showMessageDialog (null, error);
+}
+  
+}
+
+       public void mostarItens(){
+     int seleciona = jTableCPF.getSelectedRow();
+     jTextFieldCPF.setText(jTableCPF.getModel().getValueAt(seleciona,0).toString());
+     jTextFieldNome.setText(jTableCPF.getModel().getValueAt(seleciona,1).toString());
+     jComboBoxNatureza.setSelectedItem(jTableCPF.getModel().getValueAt(seleciona,2).toString());
+     
+     
+    
+    }
+       
+       public void editarCPF(){
+    String sql = "UPDATE pagamento set num_cartao=?,nome_cartao=?,rede_card=?,cv_cartao=?,bank=?,status_pagamento=? WHERE id_pagamento =?";
+    try
+{
+    pst = conexao.prepareStatement(sql);  
+  
+    pst.setString(1,  jTextFieldNome.getText());
+    pst.setString(2, (String) jComboBoxNatureza.getSelectedItem());
+    pst.setInt(3,Integer.parseInt(jTextFieldCPF.getText()));
+            pst.executeUpdate();
+              JOptionPane.showMessageDialog (null, "Cadastro Atualizado com sucesso");
+              listarCPF();
+}catch(SQLException error)
+{
+JOptionPane.showMessageDialog (null, error);
+}
+    }
+
+     public void deletarCPF(){
+         String sql = "DELETE FROM cliente_cpf WHERE cpf_cliente =?";
+           try
+{
+    pst = conexao.prepareStatement(sql); 
+    pst.setInt(1,Integer.parseInt(jTextFieldCPF.getText()));
+            pst.executeUpdate();
+              JOptionPane.showMessageDialog (null, "Cliente apagado com sucesso");
+              listarCPF();
+}catch(SQLException error)
+{
+JOptionPane.showMessageDialog (null, error);
+}
+     }
+    
+    
+    public void limparCampos(){
+      
+     jTextFieldCPF.setText("");
+     jTextFieldNome.setText("");
+     jComboBoxNatureza.setSelectedItem("");
+        
+        }
+    
    /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,7 +133,7 @@ public class FormCPF extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBoxNatureza = new javax.swing.JComboBox<>();
         jLabelNatu = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButtonComplement = new javax.swing.JButton();
@@ -39,6 +143,8 @@ public class FormCPF extends javax.swing.JFrame {
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButtonFechar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTableCPF = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -48,11 +154,16 @@ public class FormCPF extends javax.swing.JFrame {
 
         jLabel3.setText("Nome completo:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "----------", "Pessoa Física" }));
+        jComboBoxNatureza.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "----------", "Pessoa Física" }));
 
         jLabelNatu.setText("Natureza jurídica: ");
 
-        jButton1.setText("Pesquisar");
+        jButton1.setText("Limpar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButtonComplement.setText("Complemento do cadastro");
         jButtonComplement.addActionListener(new java.awt.event.ActionListener() {
@@ -82,6 +193,11 @@ public class FormCPF extends javax.swing.JFrame {
         });
 
         jButton5.setText("Excluir");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButtonFechar.setText("Fechar");
         jButtonFechar.addActionListener(new java.awt.event.ActionListener() {
@@ -90,80 +206,124 @@ public class FormCPF extends javax.swing.JFrame {
             }
         });
 
+        jTableCPF.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jTableCPF.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableCPFMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTableCPF);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addComponent(jLabel2)
-                .addGap(18, 18, 18)
-                .addComponent(jTextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(94, 94, 94))
-            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(164, 164, 164)
-                        .addComponent(jLabel1))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(164, 164, 164)
+                                .addComponent(jLabel1))
+                            .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabelNatu)
+                                .addGap(38, 38, 38)
+                                .addComponent(jComboBoxNatureza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(79, 79, 79)
+                                .addComponent(jButtonComplement))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addContainerGap()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jButton3))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                        .addGap(19, 19, 19)
+                                        .addComponent(jLabel2)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jTextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(207, 207, 207)
+                                        .addComponent(jButton1)))
+                                .addGap(28, 28, 28)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton4)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jButton5)
+                                        .addGap(32, 32, 32)
+                                        .addComponent(jButtonFechar)))))
+                        .addGap(0, 304, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabelNatu)
-                        .addGap(38, 38, 38)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(79, 79, 79)
-                        .addComponent(jButtonComplement))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(46, 46, 46)
-                        .addComponent(jButton3)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonFechar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(37, 37, 37)
+                        .addComponent(jScrollPane1)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jTextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton1)
+                            .addComponent(jButton4))))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton3)
+                            .addComponent(jButton5)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(5, 5, 5)
+                        .addComponent(jButtonFechar)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jButton1)
-                    .addComponent(jTextFieldCPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxNatureza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabelNatu))
                 .addGap(51, 51, 51)
                 .addComponent(jButtonComplement)
-                .addGap(36, 36, 36)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4)
-                    .addComponent(jButton5)
-                    .addComponent(jButtonFechar))
-                .addGap(0, 36, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 327, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonComplementActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonComplementActionPerformed
-        Visual.FormCliente formCliente = new Visual.FormCliente();
+        Visual.FormCliente formCliente = null;
+    try {
+        formCliente = new Visual.FormCliente();
+    } catch (ClassNotFoundException ex) {
+        Logger.getLogger(FormCPF.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (SQLException ex) {
+        Logger.getLogger(FormCPF.class.getName()).log(Level.SEVERE, null, ex);
+    }
         formCliente.setVisible(true);
     }//GEN-LAST:event_jButtonComplementActionPerformed
 
@@ -172,16 +332,28 @@ public class FormCPF extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldNomeActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+             cadastrarCPF();        
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
+                  editarCPF();        
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButtonFecharActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFecharActionPerformed
         this.setVisible(false);
     }//GEN-LAST:event_jButtonFecharActionPerformed
+
+    private void jTableCPFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableCPFMouseClicked
+        mostarItens();
+    }//GEN-LAST:event_jTableCPFMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    limparCampos();         
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        deletarCPF();
+    }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -213,7 +385,13 @@ public class FormCPF extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new FormCPF().setVisible(true);
+                try {
+                    new FormCPF().setVisible(true);
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(FormCPF.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(FormCPF.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -225,11 +403,13 @@ public class FormCPF extends javax.swing.JFrame {
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButtonComplement;
     private javax.swing.JButton jButtonFechar;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBoxNatureza;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabelNatu;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTableCPF;
     private javax.swing.JTextField jTextFieldCPF;
     private javax.swing.JTextField jTextFieldNome;
     // End of variables declaration//GEN-END:variables

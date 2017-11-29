@@ -9,7 +9,7 @@ package model;
  *
  * @author Guedes
  */
-public class NCLmod {
+public class NCLmod extends model.ModMarca{
      private int ncl_conj;
    private String descricao_conj;
 

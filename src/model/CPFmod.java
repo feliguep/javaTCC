@@ -9,7 +9,7 @@ package model;
  *
  * @author Guedes
  */
-public class CPFmod {
+public class CPFmod extends model.ClienteMod{
      private int cpf_cliente;
    private String nome_cliente; 
    private String legal_nature;

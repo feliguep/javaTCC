@@ -5,7 +5,7 @@ package model;
  *
  * @author Guedes
  */
-public class CNPJmod {
+public class CNPJmod extends model.ClienteMod {
      private int  cnpj_cliente;
     private  String nome_fantasia_cliente; 
     private String razao_social_cliente;

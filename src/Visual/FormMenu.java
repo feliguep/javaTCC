@@ -36,14 +36,10 @@ public class FormMenu extends javax.swing.JFrame {
         jMenuItemPesquisa = new javax.swing.JMenuItem();
         jMenuItemPagemento = new javax.swing.JMenuItem();
         jMenuItemMarca = new javax.swing.JMenuItem();
-        jMenu1 = new javax.swing.JMenu();
-        jMenuItemListCPF = new javax.swing.JMenuItem();
-        jMenuItemListCNPJ = new javax.swing.JMenuItem();
-        jMenuItemListMarc = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jMenu2.setText("Cadastro");
+        jMenu2.setText("Acesso");
 
         jMenuItemAdmin.setText("Admin");
         jMenuItemAdmin.addActionListener(new java.awt.event.ActionListener() {
@@ -107,34 +103,6 @@ public class FormMenu extends javax.swing.JFrame {
 
         jMenuBar2.add(jMenu2);
 
-        jMenu1.setText("Listagem");
-
-        jMenuItemListCPF.setText("Cliente CPF");
-        jMenuItemListCPF.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemListCPFActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItemListCPF);
-
-        jMenuItemListCNPJ.setText("Cliente CNPJ");
-        jMenuItemListCNPJ.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemListCNPJActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItemListCNPJ);
-
-        jMenuItemListMarc.setText("Marca");
-        jMenuItemListMarc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItemListMarcActionPerformed(evt);
-            }
-        });
-        jMenu1.add(jMenuItemListMarc);
-
-        jMenuBar2.add(jMenu1);
-
         setJMenuBar(jMenuBar2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -152,12 +120,26 @@ public class FormMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItemCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCPFActionPerformed
-       Visual.FormCPF formCPF = new Visual.FormCPF();
+       Visual.FormCPF formCPF = null;
+        try {
+            formCPF = new Visual.FormCPF();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(FormMenu.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FormMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
         formCPF.setVisible(true);   
     }//GEN-LAST:event_jMenuItemCPFActionPerformed
 
     private void jMenuItemCNPJActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCNPJActionPerformed
-       Visual.FormCNPJ formCNPJ = new Visual.FormCNPJ();
+       Visual.FormCNPJ formCNPJ = null;
+        try {
+            formCNPJ = new Visual.FormCNPJ();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(FormMenu.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FormMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
         formCNPJ.setVisible(true);  
     }//GEN-LAST:event_jMenuItemCNPJActionPerformed
 
@@ -210,24 +192,16 @@ public class FormMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItemPagementoActionPerformed
 
     private void jMenuItemMarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemMarcaActionPerformed
-        Visual.FormMarca formMarca = new Visual.FormMarca();
+        Visual.FormMarca formMarca = null;
+        try {
+            formMarca = new Visual.FormMarca();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(FormMenu.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(FormMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
         formMarca.setVisible(true); 
     }//GEN-LAST:event_jMenuItemMarcaActionPerformed
-
-    private void jMenuItemListMarcActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemListMarcActionPerformed
-         Visual.FormListMarca formListMarca = new Visual.FormListMarca();
-       formListMarca.setVisible(true);
-    }//GEN-LAST:event_jMenuItemListMarcActionPerformed
-
-    private void jMenuItemListCPFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemListCPFActionPerformed
-        Visual. FormListCPF  formListCPF = new Visual. FormListCPF();
-        formListCPF.setVisible(true);
-    }//GEN-LAST:event_jMenuItemListCPFActionPerformed
-
-    private void jMenuItemListCNPJActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemListCNPJActionPerformed
-        Visual. FormListCNPJ  formListCNPJ = new Visual. FormListCNPJ();
-        formListCNPJ.setVisible(true);
-    }//GEN-LAST:event_jMenuItemListCNPJActionPerformed
 
     
       
@@ -276,16 +250,12 @@ public class FormMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItemAdmin;
     private javax.swing.JMenuItem jMenuItemCNPJ;
     private javax.swing.JMenuItem jMenuItemCPF;
-    private javax.swing.JMenuItem jMenuItemListCNPJ;
-    private javax.swing.JMenuItem jMenuItemListCPF;
-    private javax.swing.JMenuItem jMenuItemListMarc;
     private javax.swing.JMenuItem jMenuItemMarca;
     private javax.swing.JMenuItem jMenuItemPagemento;
     private javax.swing.JMenuItem jMenuItemParceiro;
